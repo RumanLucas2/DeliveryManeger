@@ -114,7 +114,7 @@ namespace Project
                 split[0] = split[0].Replace("(", "").Replace(")", "").Trim();
                 split[1] = split[1].Replace(")", "").Replace("-", "").Trim();
 
-                var date = reader.GetString(2).Replace("/", " ").Split(' ');
+                var date = reader.GetString(2).Replace("|", " ").Split(' ');
                 date[0] = date[0].Trim();
                 date[1] = date[1].Trim();
                 DataBase.Collection.Add(new Cliente

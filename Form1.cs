@@ -13,6 +13,9 @@ namespace Project
             InitializeComponent();
             this.Text = null;
             this.ControlBox = false;
+            this.MaximizeBox = true;
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private void Form1_Load(object sender, EventArgs e)
