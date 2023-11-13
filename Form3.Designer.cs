@@ -32,6 +32,7 @@ namespace Project
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pedido));
             this.voltar = new System.Windows.Forms.Button();
             this.NomeTXT = new System.Windows.Forms.TextBox();
             this.PreçoTXT = new System.Windows.Forms.TextBox();
@@ -66,7 +67,7 @@ namespace Project
             this.voltar.Margin = new System.Windows.Forms.Padding(4);
             this.voltar.Name = "voltar";
             this.voltar.Size = new System.Drawing.Size(150, 88);
-            this.voltar.TabIndex = 1;
+            this.voltar.TabIndex = 7;
             this.voltar.Text = "Voltar";
             this.voltar.UseVisualStyleBackColor = true;
             this.voltar.Click += new System.EventHandler(this.Voltar_Click);
@@ -78,7 +79,7 @@ namespace Project
             this.NomeTXT.Name = "NomeTXT";
             this.NomeTXT.ReadOnly = true;
             this.NomeTXT.Size = new System.Drawing.Size(368, 60);
-            this.NomeTXT.TabIndex = 5;
+            this.NomeTXT.TabIndex = 8;
             // 
             // PreçoTXT
             // 
@@ -87,14 +88,14 @@ namespace Project
             this.PreçoTXT.Name = "PreçoTXT";
             this.PreçoTXT.ReadOnly = true;
             this.PreçoTXT.Size = new System.Drawing.Size(368, 60);
-            this.PreçoTXT.TabIndex = 7;
+            this.PreçoTXT.TabIndex = 5;
             // 
             // NomeLabel
             // 
             this.NomeLabel.AutoSize = true;
             this.NomeLabel.Location = new System.Drawing.Point(824, 155);
             this.NomeLabel.Name = "NomeLabel";
-            this.NomeLabel.Size = new System.Drawing.Size(137, 28);
+            this.NomeLabel.Size = new System.Drawing.Size(174, 35);
             this.NomeLabel.TabIndex = 8;
             this.NomeLabel.Text = "Nome Do Bolo";
             // 
@@ -103,7 +104,7 @@ namespace Project
             this.PreçoLabel.AutoSize = true;
             this.PreçoLabel.Location = new System.Drawing.Point(824, 262);
             this.PreçoLabel.Name = "PreçoLabel";
-            this.PreçoLabel.Size = new System.Drawing.Size(60, 28);
+            this.PreçoLabel.Size = new System.Drawing.Size(75, 35);
             this.PreçoLabel.TabIndex = 9;
             this.PreçoLabel.Text = "Preço";
             // 
@@ -112,24 +113,23 @@ namespace Project
             this.qttLabel.AutoSize = true;
             this.qttLabel.Location = new System.Drawing.Point(825, 363);
             this.qttLabel.Name = "qttLabel";
-            this.qttLabel.Size = new System.Drawing.Size(115, 28);
-            this.qttLabel.TabIndex = 10;
+            this.qttLabel.Size = new System.Drawing.Size(148, 35);
+            this.qttLabel.TabIndex = 14;
             this.qttLabel.Text = "Quantidade:";
             // 
             // qtt
             // 
             this.qtt.Location = new System.Drawing.Point(945, 361);
             this.qtt.Name = "qtt";
-            this.qtt.ReadOnly = true;
-            this.qtt.Size = new System.Drawing.Size(114, 34);
-            this.qtt.TabIndex = 11;
+            this.qtt.Size = new System.Drawing.Size(114, 41);
+            this.qtt.TabIndex = 4;
             // 
             // adicionar
             // 
             this.adicionar.Location = new System.Drawing.Point(1065, 359);
             this.adicionar.Name = "adicionar";
             this.adicionar.Size = new System.Drawing.Size(132, 81);
-            this.adicionar.TabIndex = 12;
+            this.adicionar.TabIndex = 5;
             this.adicionar.Text = "Adicionar à lista";
             this.adicionar.UseVisualStyleBackColor = true;
             this.adicionar.Click += new System.EventHandler(this.Adicionar_Click);
@@ -139,7 +139,7 @@ namespace Project
             this.compra.Location = new System.Drawing.Point(1047, 668);
             this.compra.Name = "compra";
             this.compra.Size = new System.Drawing.Size(150, 88);
-            this.compra.TabIndex = 13;
+            this.compra.TabIndex = 6;
             this.compra.Text = "Avançar";
             this.compra.UseVisualStyleBackColor = true;
             this.compra.Click += new System.EventHandler(this.VerLista_Click);
@@ -148,8 +148,8 @@ namespace Project
             // 
             this.Busca.Location = new System.Drawing.Point(75, 11);
             this.Busca.Name = "Busca";
-            this.Busca.Size = new System.Drawing.Size(744, 34);
-            this.Busca.TabIndex = 14;
+            this.Busca.Size = new System.Drawing.Size(744, 41);
+            this.Busca.TabIndex = 1;
             this.Busca.TextChanged += new System.EventHandler(this.Busca_Mudou);
             // 
             // BuscaLabel
@@ -157,7 +157,7 @@ namespace Project
             this.BuscaLabel.AutoSize = true;
             this.BuscaLabel.Location = new System.Drawing.Point(8, 14);
             this.BuscaLabel.Name = "BuscaLabel";
-            this.BuscaLabel.Size = new System.Drawing.Size(65, 28);
+            this.BuscaLabel.Size = new System.Drawing.Size(82, 35);
             this.BuscaLabel.TabIndex = 15;
             this.BuscaLabel.Text = "Busca:";
             // 
@@ -173,7 +173,7 @@ namespace Project
             this.lista.ReadOnly = true;
             this.lista.RowHeadersWidth = 51;
             this.lista.Size = new System.Drawing.Size(806, 594);
-            this.lista.TabIndex = 17;
+            this.lista.TabIndex = 2;
             this.lista.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Lista_CellMouseDoubleClick);
             // 
             // escolher
@@ -181,7 +181,7 @@ namespace Project
             this.escolher.Location = new System.Drawing.Point(829, 66);
             this.escolher.Name = "escolher";
             this.escolher.Size = new System.Drawing.Size(132, 81);
-            this.escolher.TabIndex = 18;
+            this.escolher.TabIndex = 3;
             this.escolher.Text = "escolher Item";
             this.escolher.UseVisualStyleBackColor = true;
             this.escolher.Click += new System.EventHandler(this.Escolher_Click);
@@ -209,7 +209,7 @@ namespace Project
             this.BolosText.AutoSize = true;
             this.BolosText.Location = new System.Drawing.Point(830, 505);
             this.BolosText.Name = "BolosText";
-            this.BolosText.Size = new System.Drawing.Size(61, 28);
+            this.BolosText.Size = new System.Drawing.Size(78, 35);
             this.BolosText.TabIndex = 23;
             this.BolosText.Text = "Bolos:";
             // 
@@ -218,7 +218,7 @@ namespace Project
             this.QuantidadeDeBolos.AutoSize = true;
             this.QuantidadeDeBolos.Location = new System.Drawing.Point(890, 505);
             this.QuantidadeDeBolos.Name = "QuantidadeDeBolos";
-            this.QuantidadeDeBolos.Size = new System.Drawing.Size(45, 28);
+            this.QuantidadeDeBolos.Size = new System.Drawing.Size(54, 35);
             this.QuantidadeDeBolos.TabIndex = 24;
             this.QuantidadeDeBolos.Text = "999";
             // 
@@ -227,7 +227,7 @@ namespace Project
             this.Total.AutoSize = true;
             this.Total.Location = new System.Drawing.Point(830, 533);
             this.Total.Name = "Total";
-            this.Total.Size = new System.Drawing.Size(60, 28);
+            this.Total.Size = new System.Drawing.Size(78, 35);
             this.Total.TabIndex = 25;
             this.Total.Text = "Total :";
             // 
@@ -236,7 +236,7 @@ namespace Project
             this.TotalTxt.AutoSize = true;
             this.TotalTxt.Location = new System.Drawing.Point(890, 533);
             this.TotalTxt.Name = "TotalTxt";
-            this.TotalTxt.Size = new System.Drawing.Size(71, 28);
+            this.TotalTxt.Size = new System.Drawing.Size(85, 35);
             this.TotalTxt.TabIndex = 26;
             this.TotalTxt.Text = "99,999";
             // 
@@ -250,13 +250,12 @@ namespace Project
             // 
             // Pedido
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 35F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1214, 768);
             this.Controls.Add(this.TotalTxt);
             this.Controls.Add(this.Total);
             this.Controls.Add(this.QuantidadeDeBolos);
-            this.Controls.Add(this.BolosText);
             this.Controls.Add(this.aviso);
             this.Controls.Add(this.escolher);
             this.Controls.Add(this.lista);
@@ -271,7 +270,9 @@ namespace Project
             this.Controls.Add(this.PreçoTXT);
             this.Controls.Add(this.NomeTXT);
             this.Controls.Add(this.voltar);
+            this.Controls.Add(this.BolosText);
             this.Font = new System.Drawing.Font("Nirmala UI Semilight", 15F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Pedido";
             this.Text = "Form3";

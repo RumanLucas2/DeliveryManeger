@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using RestSharp; 
 
@@ -6,7 +7,12 @@ namespace Project
 {
     public class CEP
     {
-        public string Cep { get; set; } = string.Empty;
+        private string Cep = string.Empty;
+        public string GetCep()
+        {
+            return this.Cep;
+        }
+
         public string Logradouro { get; set; } = string.Empty;
         public string Complemento { get; set; } = string.Empty;
         public string Bairro { get; set; } = string.Empty;
@@ -16,6 +22,15 @@ namespace Project
         public string Gia { get; set; } = string.Empty;
         public string Ddd { get; set; } = string.Empty;
         public string Siafi { get; set; } = string.Empty;
+
+        /// <summary>
+        /// retorna o endereço completo do cliente
+        /// </summary>
+        public string Endereço
+        {
+            get => $"{Logradouro}\n Numero:{Atual.User.Numero}\nComplemento: {Atual.User.Complemento}";
+        }
+
         public CEP() { }
 
         public CEP(string _cep)
@@ -84,12 +99,17 @@ namespace Project
         /// <param name="day"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        public Date (int day, int month)
+        public Date(int day, int month)
         {
             Day = day;
             Month = month;
             Full_Date = $"{day}|{month}";
             Full_Date_Ameriaca = $"{month}|{day}";
+        }
+
+        public static Date Data()
+        {
+            return new Date();
         }
     }
 
@@ -132,6 +152,8 @@ namespace Project
             ToStore = $"({ddd}) {phoneNumber.ToString().Insert(5, "-")}";
         }
         public CellPhone() { }
+
+
         /// <summary>
         /// Volta da saida do excel para os outros
         /// </summary>
@@ -141,6 +163,22 @@ namespace Project
             int pn = int.Parse($"{ExcelCell.Split(' ')[1].Replace("-", "")}");
             return new CellPhone(ddd, pn);
         }
+    }
+
+    /// <summary>
+    /// Classe de tempo
+    /// </summary>
+    public class Time
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Hour { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Min { get; set; }
+
     }
 
     //public static class Token

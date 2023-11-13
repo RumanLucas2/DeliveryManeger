@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Cadastro));
             this.Voltar = new System.Windows.Forms.Button();
             this.Salvar = new System.Windows.Forms.Button();
             this.NomeLabel = new System.Windows.Forms.Label();
@@ -44,7 +45,7 @@
             this.Endereço = new System.Windows.Forms.TextBox();
             this.NiverText = new System.Windows.Forms.Label();
             this.Aniversario = new System.Windows.Forms.MaskedTextBox();
-            this.Tell = new System.Windows.Forms.MaskedTextBox();
+            this.Telefone = new System.Windows.Forms.MaskedTextBox();
             this.CPF = new System.Windows.Forms.MaskedTextBox();
             this.Cep = new System.Windows.Forms.MaskedTextBox();
             this.Warning = new System.Windows.Forms.Label();
@@ -86,7 +87,7 @@
             this.Nome.Name = "Nome";
             this.Nome.Size = new System.Drawing.Size(1102, 41);
             this.Nome.TabIndex = 0;
-            this.Nome.Text = "Nome";
+            this.Nome.Enter += new System.EventHandler(this.Nome_Enter);
             // 
             // FichaLabel
             // 
@@ -205,15 +206,18 @@
             this.Aniversario.Name = "Aniversario";
             this.Aniversario.Size = new System.Drawing.Size(348, 41);
             this.Aniversario.TabIndex = 3;
+            this.Aniversario.Click += new System.EventHandler(this.Aniversario_Click);
+            this.Aniversario.Enter += new System.EventHandler(this.Aniversario_Enter);
             // 
-            // Tell
+            // Telefone
             // 
-            this.Tell.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Insert;
-            this.Tell.Location = new System.Drawing.Point(104, 112);
-            this.Tell.Mask = "(99) 00000-0000";
-            this.Tell.Name = "Tell";
-            this.Tell.Size = new System.Drawing.Size(152, 41);
-            this.Tell.TabIndex = 1;
+            this.Telefone.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Insert;
+            this.Telefone.Location = new System.Drawing.Point(104, 112);
+            this.Telefone.Mask = "(00) 00000-0000";
+            this.Telefone.Name = "Telefone";
+            this.Telefone.Size = new System.Drawing.Size(152, 41);
+            this.Telefone.TabIndex = 1;
+            this.Telefone.Enter += new System.EventHandler(this.Telefone_Enter);
             // 
             // CPF
             // 
@@ -222,15 +226,21 @@
             this.CPF.Name = "CPF";
             this.CPF.Size = new System.Drawing.Size(193, 41);
             this.CPF.TabIndex = 2;
+            this.CPF.Click += new System.EventHandler(this.CPF_Click);
+            this.CPF.Enter += new System.EventHandler(this.CPF_Enter);
             // 
             // Cep
             // 
-            this.Cep.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.Cep.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.Cep.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Insert;
             this.Cep.Location = new System.Drawing.Point(58, 170);
             this.Cep.Mask = "00000-000";
             this.Cep.Name = "Cep";
             this.Cep.Size = new System.Drawing.Size(168, 41);
             this.Cep.TabIndex = 4;
+            this.Cep.UseWaitCursor = true;
+            this.Cep.Click += new System.EventHandler(this.Cep_Click);
+            this.Cep.Enter += new System.EventHandler(this.Cep_Enter);
             this.Cep.Leave += new System.EventHandler(this.CepLeave);
             // 
             // Warning
@@ -261,7 +271,7 @@
             this.Controls.Add(this.Warning);
             this.Controls.Add(this.Cep);
             this.Controls.Add(this.CPF);
-            this.Controls.Add(this.Tell);
+            this.Controls.Add(this.Telefone);
             this.Controls.Add(this.Aniversario);
             this.Controls.Add(this.NiverText);
             this.Controls.Add(this.Endereço);
@@ -279,6 +289,7 @@
             this.Controls.Add(this.Salvar);
             this.Controls.Add(this.Voltar);
             this.Font = new System.Drawing.Font("Nirmala UI Semilight", 15F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.Name = "Cadastro";
             this.Text = "Form4";
@@ -306,7 +317,7 @@
         private System.Windows.Forms.TextBox Endereço;
         private System.Windows.Forms.Label NiverText;
         private System.Windows.Forms.MaskedTextBox Aniversario;
-        private System.Windows.Forms.MaskedTextBox Tell;
+        private System.Windows.Forms.MaskedTextBox Telefone;
         private System.Windows.Forms.MaskedTextBox CPF;
         private System.Windows.Forms.MaskedTextBox Cep;
         private System.Windows.Forms.Label Warning;

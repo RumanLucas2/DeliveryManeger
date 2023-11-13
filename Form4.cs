@@ -6,29 +6,28 @@ namespace Project
 {
     public partial class Cadastro : Form
     {
-        public Cadastro()
+        public Cadastro(string Telefone)
         {
             InitializeComponent();
             this.ControlBox = false;
             Atual.User = new Cliente();
+            this.Telefone.Text = Telefone;
         }
 
         private void Form4_Load(object sender, EventArgs e)
         {
-            System.Drawing.Icon icon = new System.Drawing.Icon("icones\\logo.ico");
             this.Text = null;
-            this.Icon = icon;
             
             Cep.MaxLength = 8;
 
-            Tell.MaxLength = 9;
+            Telefone.MaxLength = 9;
 
             CPF.MaxLength = 11;
             CPFCheck.CheckState = CheckState.Unchecked;
             CPF.Enabled = false;
             CPF.ReadOnly = true;
 
-            //caixa de testo que aparece o logradouro:: Endereço
+            //caixa de texto que aparece o logradouro:: Endereço
             Endereço.ReadOnly = true;
             Endereço.Hide();
 
@@ -87,13 +86,13 @@ namespace Project
                 WarningControlOff(NomeLabel, Nome);
             }
 
-            if (Tell.MaskCompleted == false)
+            if (Telefone.MaskCompleted == false)
             {
-                WarningControl(TellLabel, Tell);
+                WarningControl(TellLabel, Telefone);
             }
             else
             {
-                WarningControlOff(TellLabel, Tell);
+                WarningControlOff(TellLabel, Telefone);
             }
 
             if (CPFCheck.Checked == true && CPF.MaskCompleted == false)
@@ -128,7 +127,7 @@ namespace Project
                 return;
             }
             Atual.User.Name = Nome.Text;
-            Atual.User.Telefone = new CellPhone(int.Parse(Tell.Text.Split(' ')[0].Replace("(", "").Replace(")", "")), int.Parse(Tell.Text.Split(' ')[1].Trim().Replace("-", "")));
+            Atual.User.Telefone = new CellPhone(int.Parse(Telefone.Text.Split(' ')[0].Replace("(", "").Replace(")", "")), int.Parse(Telefone.Text.Split(' ')[1].Trim().Replace("-", "")));
             if (CPFCheck.Checked == true)
             {
                 Atual.User.CPF = CPF.Text;
@@ -153,7 +152,7 @@ namespace Project
             Salvar.Hide();
             Salvar.Enabled = false;
             this.Close();
-            Atual.WhatsApp();
+            Atual.WhatsApp(Atual.Set.Cadastro);
             ExcelClass.Save(Atual.User);
         }
         private void TrocaCor(Control componente, string color)
@@ -179,15 +178,54 @@ namespace Project
         {
             await aux;
             Endereço.Show();
-            Endereço.Text = $"Logradouro é: {Atual.User.Endereço.Logradouro}?";
+            Endereço.Text = (Internet.Connection == false ? "Sem Internet" : $"Logradouro é: {Atual.User.Endereço.Logradouro}?");
         }
 
-        private Task Print()
+        private async Task Print()
         {
             //pegando informações
-            Atual.User.Endereço = new CEP();
-            Atual.User.Endereço = CEP.SetEndereço(Cep.Text).GetAwaiter().GetResult();
-            return Task.CompletedTask;
+            Atual.User.Endereço = await CEP.SetEndereço(Cep.Text);
+            return;
+        }
+
+        private void Nome_Enter(object sender, EventArgs e)
+        {
+            Nome.SelectAll();
+        }
+
+        private void Telefone_Enter(object sender, EventArgs e)
+        {
+            Telefone.SelectAll();
+        }
+
+        private void CPF_Enter(object sender, EventArgs e)
+        {
+            CPF.SelectAll();
+        }
+
+        private void Aniversario_Enter(object sender, EventArgs e)
+        {
+            Aniversario.SelectAll();
+        }
+
+        private void Cep_Enter(object sender, EventArgs e)
+        {
+            Cep.SelectAll();
+        }
+
+        private void CPF_Click(object sender, EventArgs e)
+        {
+            CPF.SelectionStart = CPF.Text.Replace("_", "").Replace(".","").Replace("-","").Replace(" ", "").Length > 3 ? (CPF.Text.Replace("_", "").Replace(".", "").Replace("-", "").Replace(" ", "").Length > 6 ? (CPF.Text.Replace("_", "").Replace(".", "").Replace("-", "").Replace(" ", "").Length > 9 ? CPF.Text.Replace("_", "").Replace(".", "").Replace("-", "").Replace(" ", "").Length +3 : CPF.Text.Replace("_", "").Replace(".", "").Replace("-", "").Replace(" ", "").Length +2) : CPF.Text.Replace("_", "").Replace(".", "").Replace("-", "").Replace(" ", "").Length +1) : CPF.Text.Replace("_", "").Replace(".", "").Replace("-", "").Replace(" ", "").Length;
+        }
+
+        private void Cep_Click(object sender, EventArgs e)
+        {
+            Cep.SelectionStart = Cep.Text.Replace("_", "").Replace("-", "").Replace(" ", "").Length > 5 ? Cep.Text.Replace("_", "").Replace("-", "").Replace(" ", "").Length + 1 : Cep.Text.Replace("_", "").Replace("-", "").Replace(" ", "").Length;
+        }
+
+        private void Aniversario_Click(object sender, EventArgs e)
+        {
+            Aniversario.SelectionStart = Aniversario.Text.Replace("/", "").Replace("_", "").Replace(" ", "").Length >= 2 ? Aniversario.Text.Replace("/", "").Replace("_", "").Replace(" ", "").Length +1 : Aniversario.Text.Replace("/", "").Replace("_", "").Replace(" ", "").Length;
         }
     }
 }

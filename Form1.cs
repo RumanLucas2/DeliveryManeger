@@ -8,31 +8,32 @@ namespace Project
     {
         public Inicio()
         {
-            Arquivo.CaminhoDoArquivo = File.ReadAllText(@"caminho\exel.txt");
-            Carry.Start();
+            
+                
             InitializeComponent();
-            this.Text = null;
-            this.ControlBox = false;
-            this.MaximizeBox = true;
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.None;
+            
+                            Internet.Start();
+            Carry.Start();
+            Text = null;
+            ControlBox = false;
+            MaximizeBox = true;
+            WindowState = FormWindowState.Maximized;
+            FormBorderStyle = FormBorderStyle.None;
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            System.Drawing.Icon icon = new System.Drawing.Icon("icones\\logo.ico");
-            this.Icon = icon;
             ButtonPedidos.Text = "Iniciar pedido";
-            OFF.Text = "Finalizar programa";            
+            OFF.Text = "Finalizar programa";
         }
 
         private void ButtonPedidos_Click(object sender, EventArgs e)
         {
-          //this.Hide();
+            //this.Hide();
             IniPedido w = new IniPedido();
             w.Show();
-            
+
         }
 
         private void OFF_Click(object sender, EventArgs e)
@@ -44,7 +45,7 @@ namespace Project
         {
             Confs w = new Confs();
             w.Show();
-        }        
+        }
     }
 
     public static class Carry
@@ -62,21 +63,23 @@ namespace Project
     /// </summary>
     public static class Arquivo
     {
-        public static string CaminhoDoArquivo
+        public static string GetCaminhoDoArquivo()
         {
-            get => LerArquivo();
+            return LerArquivo();
+        }
 
-            set => ReescreverArquivo(value);
+        public static void SetCaminhoDoArquivo(string value)
+        {
+            ReescreverArquivo(value);
         }
 
         private static string _caminhoDoArquivo;
 
-        private static string LerArquivo()
+        public static string LerArquivo()
         {
             using (StreamReader sr = new StreamReader(@"caminho\exel.txt"))
             {
                 _caminhoDoArquivo = sr.ReadToEnd();
-                sr.Close();
             }
             return _caminhoDoArquivo;
         }
@@ -89,6 +92,23 @@ namespace Project
             }
             File.WriteAllText(@"caminho\exel.txt", aux);
             _caminhoDoArquivo = aux;
+        }
+
+        public static void SetArquive()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                // Configura as propriedades do OpenFileDialog
+                Filter = "Arquivos do Excel (*.xlsx)|*.xlsx|Todos os arquivos (*.*)|*.*",
+                Title = "Selecione um arquivo do Excel",
+                Multiselect = false,
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Arquivo.SetCaminhoDoArquivo(openFileDialog.FileName);
+                // Fazer algo com o caminho do arquivo selecionado
+            }
         }
     }
 }

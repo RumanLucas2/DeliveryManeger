@@ -1,9 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
 namespace Project
 {
-
     public partial class Confs : Form
     {
 
@@ -16,7 +17,7 @@ namespace Project
         private void Confs_Load(object sender, EventArgs e)
         {
             voltar.Text = "Voltar";
-            CaminhoArquivo.Text = Arquivo.CaminhoDoArquivo;
+            CaminhoArquivo.Text = Arquivo.GetCaminhoDoArquivo();
 
         }
 
@@ -27,20 +28,7 @@ namespace Project
 
         private void Search_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                // Configura as propriedades do OpenFileDialog
-                Filter = "Arquivos do Excel (*.xlsx)|*.xlsx|Todos os arquivos (*.*)|*.*",
-                Title = "Selecione um arquivo do Excel",
-                Multiselect = false
-            };
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                CaminhoArquivo.Text = openFileDialog.FileName;
-                Arquivo.CaminhoDoArquivo = CaminhoArquivo.Text;
-                // Fazer algo com o caminho do arquivo selecionado
-            }
+            Arquivo.SetArquive();
         }
     }
 }

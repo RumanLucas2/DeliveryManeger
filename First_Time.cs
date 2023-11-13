@@ -15,46 +15,47 @@ namespace Project
 {
     public class First_Time
     {
-        private readonly string Arquivo = "config.txt";
+        private readonly string arquivo = "config.txt";
 
-        public DataTable DT { get; set; }
+        public static DataTable DT { get; set; }
 
-        private DataSet DS { get; set; }
-
-        public bool Teste { get; set; }
-
-        public DirectoryInfo Directoryinfo;
+        private static DataSet DS { get; set; }
 
         public First_Time()
         {
-            Teste = false;
-            DT = new DataTable();
             Atual.User = new Cliente();
             Config();
         }
         private void Config()
         {
-            StartDataTable();
+            DirectoryInfo Directoryinfo;
             Directoryinfo = Directory.CreateDirectory(@"ClientesBase");
             Directoryinfo.Attributes |= FileAttributes.Hidden;
-            if (!File.Exists(Arquivo))
+            if (!File.Exists(arquivo))
             {
                 // criando todos os diretorios Para futuro uso
-                File.Create(Arquivo).Close();
-                File.SetAttributes(Arquivo, File.GetAttributes(Arquivo) | FileAttributes.Hidden);
+                Arquivo.SetArquive();
+                StartDataTable();
+                File.Create(arquivo).Close();
+                File.SetAttributes(arquivo, File.GetAttributes(arquivo) | FileAttributes.Hidden);
                 Directory.CreateDirectory(@"caminho").Attributes |= FileAttributes.Hidden; // |= : se diferente, seta para o valor da direita, se nao, não altera
+                Directory.CreateDirectory(@"Nota").Attributes |= FileAttributes.Hidden;
                 ExcelClass.Run(true, Directoryinfo.FullName).Wait();
             }
             else
             {
+                Arquivo.SetCaminhoDoArquivo(File.ReadAllText(@"caminho\exel.txt"));//arquivo de base
                 ExcelClass.Run(false, Directoryinfo.FullName).Wait();
+
             }
         }
 
-        public async void StartDataTable()
+        public static Task StartDataTable()
         {
             // Configurar DataTable
-            var stream = new FileStream(Project.Arquivo.CaminhoDoArquivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            DT = new DataTable();
+            DS = new DataSet();
+            var stream = new FileStream(Project.Arquivo.GetCaminhoDoArquivo(), FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             DT.Columns.Add("Produto");
             DT.Columns.Add("Preço");
             IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
@@ -69,11 +70,10 @@ namespace Project
             });
             GetTablenames(DS.Tables);
             reader.Close();
-            Teste = true;
-            await Task.Delay(0);
+            return Task.CompletedTask;
         }
 
-        private void GetTablenames(DataTableCollection tables)
+        private static void GetTablenames(DataTableCollection tables)
         {
             foreach (DataRow table in tables[0].Rows)
             {

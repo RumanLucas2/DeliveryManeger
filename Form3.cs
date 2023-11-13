@@ -7,18 +7,12 @@ using System.Windows.Forms;
 
 namespace Project
 {
-    //List<string> listaOriginal = new List<string>();
     public struct Bolo
     {
         public string Nome;
         public int Quantidade;
         public string preço;
         public string OBS;
-
-        public static implicit operator Bolo(BoloManager.RowItem v)
-        {
-            throw new NotImplementedException();
-        }
     }
     
 
@@ -30,20 +24,16 @@ namespace Project
             voltar.Text = "voltar";
             this.ControlBox = false;
             this.Text = null;
-            //garante que todos os clientes terao bolos diferentes
-            BoloManager.ListaBolo.Clear();
-            BoloManager.LastBolo.Clear();
-            //setar icone
-            System.Drawing.Icon icon = new System.Drawing.Icon("icones\\logo.ico");
-            this.Icon = icon;
-            //espera o termino da chamada assincrona
-            
-            while (true)
+            //garante que todos os clientes terão bolos diferentes
+            BoloManager.ListaBolo = new BoloManager.MyList();
+            BoloManager.LastBolo = new BoloManager.MyClass();
+            //espera o termino da chamada assíncrona
+            if (!First_Time.StartDataTable().IsCompleted)
             {
-                if (Carry.Id.Teste == true) break;
+                First_Time.StartDataTable().Wait();
             }
             //salva a data view
-            lista.DataSource = Carry.Id.DT.DefaultView;
+            lista.DataSource = First_Time.DT.DefaultView;
         }
         
         private void Form3_Load(object sender, EventArgs e)
@@ -59,7 +49,6 @@ namespace Project
             compra.Visible = false;
             compra.Enabled = false;
             //deixa a lista de uma forma mais visivel
-            lista.Columns["Preço"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             lista.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             lista.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
@@ -97,20 +86,18 @@ namespace Project
                     TotalTxt.Text = $"R$ {int.Parse(TotalTxt.Text.Replace("$", "").Replace("R", "")) + (int.Parse(PreçoTXT.Text.Replace("$", "").Replace("R", "")) * (int)qtt.Value)}";
                 }
             }
-            
-            
         }
 
         private void VerLista_Click(object sender, EventArgs e)
         {
             VerLista w = new VerLista();
             w.Show();
+            this.Close();
         }
-
 
         private void Busca_Mudou(object sender, EventArgs e)
         {
-            DataView dv = Carry.Id.DT.DefaultView;
+            DataView dv = First_Time.DT.DefaultView;
             dv.RowFilter = string.Format("Produto like '%" + Busca.Text + "%'");
             lista.DataSource = dv.ToTable();
         }
@@ -135,13 +122,14 @@ namespace Project
 
     public static class BoloManager
     {
-        
-        public static MyList ListaBolo { get; set; } = new MyList();
+        public static MyList ListaBolo = new MyList();// Inicializa a lista vazia
 
         public static MyClass LastBolo { get; set; } = new MyClass();
 
         public class MyList : List<Bolo>
         {
+
+            public int Value { get; set; } = 0;
             public void AddAt(int index, Bolo item)
             {
                 if (index < 0 || index > Count)
@@ -157,6 +145,24 @@ namespace Project
                 {
                     Insert(index, item);
                 }
+            }
+            public new void Add(Bolo Item)
+            {
+                this.Value += int.Parse(Item.preço.Replace("R", "").Replace("$", "").Trim())*Item.Quantidade;
+                base.Add(Item);
+            }
+
+            public new void Insert(int index, Bolo Item)
+            {
+                this.Value += int.Parse(Item.preço.Replace("R", "").Replace("$", "").Trim()) * Item.Quantidade;
+                base.Insert(index, Item);
+            }
+
+            public new void RemoveAt(int index)
+            {
+                
+                this.Value -= int.Parse(this[index].preço.Replace("R", "").Replace("$", "").Trim()) * this[index].Quantidade;
+                base.RemoveAt(index);
             }
         }
 
@@ -180,7 +186,7 @@ namespace Project
             }
             public int Last()
             {
-                return Count- 1;
+                return Count-1;
             }
         }
 
